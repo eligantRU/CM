@@ -3,7 +3,7 @@
 namespace
 {
 
-const std::set<std::string> FLAGS = { "-t", "-p", };
+const std::set<std::string> FLAGS = { "-t", "-p" };
 
 template <class T>
 auto MeasureTime(T && fn)
