@@ -61,9 +61,9 @@ int main(int argc, char * argv[])
 		});
 		if (flags.find("-t") != flags.end())
 		{
-			std::cout << "runtime = "
-				<< std::chrono::duration_cast<std::chrono::milliseconds>(t).count()
-				<< " ms" << std::endl;
+			std::cerr << "runtime = "
+			          << std::chrono::duration_cast<std::chrono::milliseconds>(t).count()
+			          << " ms" << std::endl;
 		}
 	}
 	catch (std::exception & ex)
