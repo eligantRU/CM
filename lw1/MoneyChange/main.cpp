@@ -3,15 +3,33 @@
 namespace
 {
 
-const std::vector<size_t> BANKNOTES = { 1, 2, 5, 10, 50, 100, 500, 1000, 5000 };
-const size_t TOTAL_MONEY = 8086;
+// NOTE: BANKNOTES need to be sorted! (For optimization)
+const std::vector<size_t> BANKNOTES = { 1, 2, 5, 10, 50, 100 };
+const size_t BANKNOTE_COUNT = 2;
+const size_t TOTAL_MONEY = 336;
 
-void PrintChunks(const std::map<size_t, size_t> & chunks)
+bool FindSolve(std::map<size_t, size_t> & chunks, size_t balance) noexcept
 {
-	for (const auto & chunk : chunks)
+	for (const auto & banknote : BANKNOTES)
 	{
-		std::cout << chunk.first << " " << chunk.second << std::endl;
+		if (chunks[banknote] > 0)
+		{
+			if (balance - banknote == 0)
+			{
+				return true;
+			}
+			if (balance - banknote > 0)
+			{
+				auto clone(chunks);
+				--clone[banknote];
+				if (FindSolve(clone, balance - banknote))
+				{
+					return true;
+				}
+			}
+		}
 	}
+	return false;
 }
 
 }
@@ -21,37 +39,18 @@ int main(int, char * [])
 	std::map<size_t, size_t> chunks;
 	for (auto & banknote : BANKNOTES)
 	{
-		chunks[banknote] = 2;
+		chunks[banknote] = BANKNOTE_COUNT;
 	}
 	size_t balance = TOTAL_MONEY;
 
-	while (balance > 0)
+	if (FindSolve(chunks, balance))
 	{
-		auto bla = std::find_if(chunks.rbegin(), chunks.rend(), [=](const auto & chunk) {
-			return ((chunk.second > 0) && (chunk.first <= balance));
-		});
-		if (bla == chunks.rend())
-		{
-			std::cout << "No roots" << std::endl;
-			return 1;
-		}
-		else
-		{
-			balance -= (*bla).first;
-			--chunks[(*bla).first];
-		}
-		if (balance == 0)
-		{
-			std::cout << "Hip-hip! Hooray!" << std::endl;
-			for (const auto & chunk : chunks)
-			{
-				if (chunk.second != 2)
-				{
-					std::cout << "+ " << (2 - chunk.second) << "*" << chunk.first << " ";
-				}
-			}
-			std::cout << std::endl;
-		}
+		std::cout << "Solve!" << std::endl;
 	}
+	else
+	{
+		std::cout << "There is no decision" << std::endl;
+	}
+
 	return 0;
 }
