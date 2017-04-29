@@ -3,10 +3,10 @@
 namespace
 {
 
-// NOTE: BANKNOTES need to be sorted! (For optimization)
+// NOTE: BANKNOTES need to be sorted for optimization!
 const std::vector<size_t> BANKNOTES = { 1, 2, 5, 10, 50, 100 };
 const size_t BANKNOTE_COUNT = 2;
-const size_t TOTAL_MONEY = 336;
+const size_t TOTAL_MONEY = 337;
 
 bool FindSolve(std::map<size_t, size_t> & chunks, size_t balance) noexcept
 {
@@ -18,7 +18,7 @@ bool FindSolve(std::map<size_t, size_t> & chunks, size_t balance) noexcept
 			{
 				return true;
 			}
-			if (balance - banknote > 0)
+			else if (balance - banknote > 0)
 			{
 				auto clone(chunks);
 				--clone[banknote];
@@ -26,6 +26,10 @@ bool FindSolve(std::map<size_t, size_t> & chunks, size_t balance) noexcept
 				{
 					return true;
 				}
+			}
+			else
+			{
+				return false;
 			}
 		}
 	}
@@ -36,12 +40,12 @@ bool FindSolve(std::map<size_t, size_t> & chunks, size_t balance) noexcept
 
 int main(int, char * [])
 {
+	size_t balance = TOTAL_MONEY;
 	std::map<size_t, size_t> chunks;
 	for (auto & banknote : BANKNOTES)
 	{
 		chunks[banknote] = BANKNOTE_COUNT;
 	}
-	size_t balance = TOTAL_MONEY;
 
 	if (FindSolve(chunks, balance))
 	{
