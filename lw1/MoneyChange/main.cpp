@@ -69,7 +69,7 @@ int main(int, char * [])
 {
 	if (CanExchange(GetChunks(), TOTAL_MONEY))
 	{
-		std::cout << "Solve!" << std::endl;
+		std::cout << "Solved!" << std::endl;
 	}
 	else
 	{
