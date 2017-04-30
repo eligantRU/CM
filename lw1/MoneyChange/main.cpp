@@ -6,7 +6,7 @@ namespace
 // NOTE: BANKNOTES need to be sorted! [for optimization]
 const std::vector<size_t> BANKNOTES = { 1, 2, 5, 10, 50, 100, 500 };
 const size_t BANKNOTE_COUNT = 2;
-const size_t TOTAL_MONEY = 1336; // TOTAL_MONEY must be more than zero
+const size_t TOTAL_MONEY = 1336;
 
 std::map<size_t, size_t> GetChunks()
 {
@@ -48,6 +48,11 @@ bool CanSolve(std::map<size_t, size_t> & chunks, size_t balance) noexcept
 
 bool CanExchange(const std::map<size_t, size_t> & chunks, size_t balance)
 {
+	if (balance == 0)
+	{
+		return true;
+	}
+
 	const auto doubleMax = BANKNOTE_COUNT * std::accumulate(BANKNOTES.cbegin(), BANKNOTES.cend(), size_t());
 	if (!((0 < TOTAL_MONEY) && (TOTAL_MONEY <= doubleMax)))
 	{
