@@ -23,20 +23,16 @@ int main(int argc, char * argv[])
 
 	if (vm.count("n"))
 	{
-		std::vector<size_t> bla;
-		for (size_t i = 0; i < vm["n"].as<size_t>(); ++i)
-		{
-			bla.push_back(i);
-		}
+		std::random_device rd;
+		std::mt19937 g(rd());
 
 		std::vector<size_t> permutation;
 		for (size_t i = 0; i < vm["n"].as<size_t>(); ++i)
 		{
-			size_t randNum = rand() % bla.size();
-			permutation.push_back(bla[randNum]);
-			auto it = std::find(bla.begin(), bla.end(), bla[randNum]);
-			bla.erase(it);
+			permutation.push_back(i);
 		}
+		std::shuffle(permutation.begin(), permutation.end(), g);
+
 		for (const auto & el : permutation)
 		{
 			std::cout << el << " ";
