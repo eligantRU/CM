@@ -13,7 +13,7 @@ auto MeasureTime(T && fn)
 
 void GenerateCombination(const size_t n, const size_t k, const bool isNeedToPrint)
 {
-	std::string comb(k, 1);
+	std::vector<size_t> comb(k, 1);
 	comb.resize(n, 0);
 
 	do {
